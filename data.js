@@ -89,6 +89,6 @@ const SITE = {
   ],
   "siteUrl": "https://calihandlyyt.github.io",
   "description": "owicog — fullstack-разработчик: Telegram-боты, веб-сервисы, приложения и игры.",
-  "ogVersion": 1795027780625,
+  "ogVersion": 1795028186652,
   "projects": []
 };
