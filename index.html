@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--og-->
+  <title>owicog</title>
+  <meta name="description" content="owicog — fullstack-разработчик: Telegram-боты, веб-сервисы, приложения и игры.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="owicog">
+  <meta property="og:title" content="owicog — dev">
+  <meta property="og:description" content="owicog — fullstack-разработчик: Telegram-боты, веб-сервисы, приложения и игры.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="owicog — dev">
+  <meta name="twitter:description" content="owicog — fullstack-разработчик: Telegram-боты, веб-сервисы, приложения и игры.">
+  <meta property="og:url" content="https://calihandlyyt.github.io/">
+  <!--/og-->
+  <meta name="theme-color" content="#06080a">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;800&family=Unbounded:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-orbs" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="spotlight" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div id="progress" aria-hidden="true"></div>
+
+  <!-- Экран загрузки -->
+  <div id="boot">
+    <pre id="boot-log"></pre>
+    <div class="boot-bar"><span></span></div>
+  </div>
+
+  <header class="topbar">
+    <a href="#top" class="logo"><span class="logo-mark">&gt;_</span> owicog<span class="blink">_</span></a>
+    <nav>
+      <a href="#about">about</a>
+      <a href="#projects">projects</a>
+      <a href="#timeline">timeline</a>
+      <a href="#skills">skills</a>
+      <a href="#contact">contact</a>
+      <a href="#terminal" class="nav-cta">shell</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-left">
+        <div class="pill" id="now-pill"><span class="dot"></span> <span id="now-text">online · открыт к проектам</span> <small id="now-ago"></small></div>
+        <pre class="ascii" aria-hidden="true">
+  ___  __      __ ___  ___  ___   ___
+ / _ \ \ \    / /|_ _|/ __|/ _ \ / __|
+| (_) | \ \/\/ /  | || (__| (_) | (_ |
+ \___/   \_/\_/  |___|\___|\___/ \___|</pre>
+        <h1 class="glitch" data-text="owicog"><span id="hero-name">owicog</span></h1>
+        <p class="typed"><span class="c">~$</span> <span id="typed"></span><span class="cursor">█</span></p>
+        <div class="hero-links">
+          <a class="btn magnetic" href="#projects"><span>смотреть проекты</span> <b>→</b></a>
+          <a class="btn ghost magnetic" href="#contact"><span>связаться</span></a>
+        </div>
+        <div class="stats">
+          <div><b data-count="projects">0</b><span>проектов</span></div>
+          <div><b data-count="tech">0</b><span>технологий</span></div>
+          <div><b data-count="bots">0</b><span>ботов</span></div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="window glass float">
+          <div class="window-bar"><i></i><i></i><i></i><span>~/profile.json</span></div>
+          <pre class="window-body code" id="profile-code"></pre>
+        </div>
+      </div>
+
+      <a href="#about" class="scroll-hint" aria-label="Листать вниз"><span></span></a>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marquee"></div></div>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="sec-head"><span class="num">01</span><h2 data-scramble>about</h2><span class="line"></span></div>
+      <div class="window glass">
+        <div class="window-bar"><i></i><i></i><i></i><span>~/about.txt</span></div>
+        <div class="window-body">
+          <p><span class="c">$</span> whoami</p>
+          <p class="out">owicog</p>
+          <p><span class="c">$</span> cat about.txt</p>
+          <p class="out" id="about-text"></p>
+          <ul class="facts">
+            <li><span class="k">age</span> <span id="age">??</span></li>
+            <li><span class="k">location</span> <span id="loc"></span></li>
+            <li><span class="k">projects</span> <span id="pcount"></span></li>
+            <li><span class="k">status</span> <span class="ok">● online</span></li>
+            <li><span class="k">uptime</span> <span id="uptime">0s</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="sec-head"><span class="num">02</span><h2 data-scramble>projects</h2><span class="line"></span></div>
+      <p class="sec-sub"><span class="c">$</span> ls -la ~/projects <span class="dim">— нажми на карточку, чтобы открыть README</span></p>
+      <div id="filters" class="filters"></div>
+      <div id="project-list" class="grid"></div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <div class="sec-head"><span class="num">03</span><h2 data-scramble>timeline</h2><span class="line"></span></div>
+      <p class="sec-sub"><span class="c">$</span> git log --oneline --reverse</p>
+      <ol id="timeline-list" class="timeline"></ol>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="sec-head"><span class="num">04</span><h2 data-scramble>skills</h2><span class="line"></span></div>
+      <div class="window glass">
+        <div class="window-bar"><i></i><i></i><i></i><span>~/skills --stats</span></div>
+        <div class="window-body" id="skill-list"></div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="sec-head"><span class="num">05</span><h2 data-scramble>contact</h2><span class="line"></span></div>
+      <p class="sec-sub"><span class="c">$</span> cat contacts.conf</p>
+      <div id="contact-list" class="contacts"></div>
+    </section>
+
+    <!-- TERMINAL -->
+    <section id="terminal">
+      <div class="sec-head"><span class="num">06</span><h2 data-scramble>shell</h2><span class="line"></span></div>
+      <div class="window glass">
+        <div class="window-bar"><i></i><i></i><i></i><span>bash — интерактивный терминал</span></div>
+        <div class="window-body term" id="term">
+          <div id="term-out"><p class="dim">Введи <b>help</b>, чтобы увидеть команды.</p></div>
+          <form id="term-form" autocomplete="off">
+            <label for="term-in" class="c">owicog@root:~$</label>
+            <input id="term-in" spellcheck="false" autocapitalize="off">
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p class="foot-logo">owicog<span class="blink">_</span></p>
+    <p>© <span id="year"></span> · <span class="dim">no rights reserved, all systems pwned</span></p>
+  </footer>
+
+  <!-- Модалка проекта -->
+  <dialog id="modal">
+    <div class="window-bar"><i></i><i></i><i></i><span id="modal-title"></span>
+      <button id="modal-close" aria-label="Закрыть">✕</button></div>
+    <div class="window-body" id="modal-body"></div>
+  </dialog>
+
+  <script src="data.js"></script>
+  <script src="projects.js"></script>
+  <script src="script.js"></script>
+  <script src="effects.js"></script>
+</body>
+</html>

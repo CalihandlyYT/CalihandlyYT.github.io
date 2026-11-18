@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>owicog admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;800&family=Unbounded:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin">
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-orbs" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="noise" aria-hidden="true"></div>
+
+  <!-- ЛОГИН -->
+  <section id="login-view" class="login">
+    <form id="login-form" class="window glass">
+      <div class="window-bar"><i></i><i></i><i></i><span>sudo -i</span></div>
+      <div class="window-body">
+        <h1 class="adm-title">root<span class="c">@</span>owicog</h1>
+        <p class="dim">Доступ только для администратора.</p>
+        <label class="fld">
+          <span>[sudo] пароль:</span>
+          <input id="pw" type="password" autocomplete="current-password" required autofocus>
+        </label>
+        <p id="login-err" class="err" role="alert"></p>
+        <button class="btn" type="submit"><span>войти</span> <b>→</b></button>
+      </div>
+    </form>
+  </section>
+
+  <!-- ПАНЕЛЬ -->
+  <section id="panel-view" class="panel" hidden>
+    <header class="adm-top">
+      <div>
+        <h1 class="adm-title">/admin<span class="blink">_</span></h1>
+        <p class="dim" id="summary"></p>
+      </div>
+      <div class="adm-actions">
+        <a class="btn ghost" href="index.html" target="_blank">сайт ↗</a>
+        <button class="btn ghost" id="logout" type="button">выйти</button>
+        <button class="btn" id="publish" type="button" title="git commit + push → GitHub Pages"><span>🚀 опубликовать</span></button>
+      </div>
+    </header>
+
+    <nav class="tabs" id="tabs" role="tablist">
+      <button type="button" data-tab="projects" class="on">проекты</button>
+      <button type="button" data-tab="profile">профиль</button>
+      <button type="button" data-tab="skills">навыки</button>
+      <button type="button" data-tab="contacts">контакты</button>
+      <button type="button" data-tab="timeline">таймлайн</button>
+      <button type="button" data-tab="preview">превью ссылки</button>
+    </nav>
+
+    <!-- ПРОЕКТЫ -->
+    <div class="tab" data-pane="projects">
+      <div class="adm-bar">
+        <button class="btn" id="add" type="button"><span>+ проект</span></button>
+        <input id="search" type="search" placeholder="поиск по названию, тегам…" aria-label="Поиск">
+        <div class="filters" id="status-filter"></div>
+      </div>
+      <div id="list" class="adm-list"></div>
+    </div>
+
+    <!-- ПРОФИЛЬ -->
+    <div class="tab" data-pane="profile" hidden>
+      <div class="window glass now-box">
+        <div class="window-body">
+          <label class="fld"><span>⚡ чем занят сейчас (видно в шапке сайта, пусто — «online · открыт к проектам»)</span>
+            <input data-k="now.text" maxlength="140" placeholder="пилю Vesper"></label>
+          <p class="dim small" id="now-updated"></p>
+        </div>
+      </div>
+      <div class="window glass">
+        <div class="window-body ed-grid">
+          <label class="fld"><span>ник</span><input data-k="nick" maxlength="30"></label>
+          <label class="fld"><span>город / страна</span><input data-k="location" maxlength="60"></label>
+          <label class="fld"><span>дата рождения (возраст посчитается сам)</span><input data-k="birthDate" type="date"></label>
+          <label class="fld"><span>или просто возраст</span><input data-k="age" type="number" min="1" max="119" placeholder="не показывать"></label>
+          <label class="fld wide"><span>о себе</span><textarea data-k="about" rows="5" maxlength="3000"></textarea></label>
+          <label class="fld wide"><span>фразы под ником (каждая с новой строки)</span><textarea data-k="taglines" rows="5"></textarea></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- НАВЫКИ / КОНТАКТЫ / ТАЙМЛАЙН -->
+    <div class="tab" data-pane="skills" hidden>
+      <div class="rep" id="rep-skills"></div>
+      <button class="btn ghost" type="button" data-add="skills">+ навык</button>
+    </div>
+    <div class="tab" data-pane="contacts" hidden>
+      <p class="dim small hint">Без ссылки контакт копируется по клику (удобно для Discord). Ссылку можно писать без https://.</p>
+      <div class="rep" id="rep-contacts"></div>
+      <button class="btn ghost" type="button" data-add="contacts">+ контакт</button>
+    </div>
+    <div class="tab" data-pane="timeline" hidden>
+      <p class="dim small hint">Идут сверху вниз; последняя запись на сайте мигает как «текущая».</p>
+      <div class="rep" id="rep-timeline"></div>
+      <button class="btn ghost" type="button" data-add="timeline">+ запись</button>
+    </div>
+
+    <!-- ПРЕВЬЮ -->
+    <div class="tab" data-pane="preview" hidden>
+      <div class="window glass">
+        <div class="window-body ed-grid">
+          <label class="fld wide"><span>адрес сайта (нужен для картинки в превью)</span>
+            <input data-k="siteUrl" placeholder="https://owicog.duckdns.org"></label>
+          <label class="fld wide"><span>описание в превью</span><textarea data-k="description" rows="2" maxlength="300"></textarea></label>
+          <p class="err wide small" id="url-warn"></p>
+        </div>
+      </div>
+      <h3 class="pv-h">так ссылка будет выглядеть в Telegram / Discord</h3>
+      <div class="link-card">
+        <b id="pv-site"></b>
+        <strong id="pv-title"></strong>
+        <p id="pv-desc"></p>
+        <canvas id="og-canvas" width="1200" height="630"></canvas>
+      </div>
+      <div class="ed-actions left">
+        <button class="btn" type="button" id="og-save"><span>сохранить картинку превью</span></button>
+        <a class="btn ghost" href="og.png" target="_blank" id="og-open">текущая og.png ↗</a>
+      </div>
+    </div>
+
+    <!-- панель сохранения настроек -->
+    <div class="savebar" id="savebar" hidden>
+      <span id="dirty">нет изменений</span>
+      <button class="btn ghost" type="button" id="site-reset">отменить</button>
+      <button class="btn" type="button" id="site-save"><span>сохранить</span></button>
+    </div>
+  </section>
+
+  <!-- РЕДАКТОР -->
+  <dialog id="editor">
+    <form id="edit-form" method="dialog">
+      <div class="window-bar"><i></i><i></i><i></i><span id="edit-title">новый проект</span>
+        <button type="button" id="edit-close" class="x" aria-label="Закрыть">✕</button></div>
+      <div class="window-body ed-grid">
+        <label class="fld wide"><span>название *</span><input name="name" required maxlength="80"></label>
+        <label class="fld"><span>категория</span>
+          <select name="category">
+            <option value="web">web</option><option value="bot">бот</option>
+            <option value="app">приложение</option><option value="game">игра</option>
+          </select></label>
+        <label class="fld"><span>статус</span>
+          <select name="status">
+            <option value="active">● активен</option>
+            <option value="wip">◐ в разработке</option>
+            <option value="abandoned">✕ заброшен</option>
+            <option value="done">✓ завершён</option>
+          </select></label>
+        <label class="fld"><span>год</span><input name="year" type="number" min="2000" max="2100"></label>
+        <label class="fld"><span>теги (через запятую)</span><input name="tags" placeholder="Node.js, SQLite"></label>
+        <label class="fld wide"><span>коротко (на карточке)</span><input name="short" maxlength="300"></label>
+        <label class="fld wide"><span>подробное описание</span><textarea name="description" rows="5" maxlength="4000"></textarea></label>
+        <label class="fld"><span>github</span><input name="github" type="text" inputmode="url" placeholder="github.com/…"></label>
+        <label class="fld"><span>telegram</span><input name="telegram" type="text" inputmode="url" placeholder="@username или t.me/…"></label>
+        <label class="fld wide"><span>сайт</span><input name="demo" type="text" inputmode="url" placeholder="site.com"></label>
+        <p id="edit-err" class="err wide" role="alert"></p>
+        <div class="wide ed-actions">
+          <button class="btn ghost" type="button" id="edit-cancel">отмена</button>
+          <button class="btn" type="submit" id="edit-save"><span>сохранить</span></button>
+        </div>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ПОДТВЕРЖДЕНИЕ -->
+  <dialog id="confirm">
+    <div class="window-bar"><i></i><i></i><i></i><span>rm -rf</span></div>
+    <div class="window-body">
+      <p id="confirm-text"></p>
+      <div class="ed-actions">
+        <button class="btn ghost" type="button" id="confirm-no">отмена</button>
+        <button class="btn danger" type="button" id="confirm-yes">удалить</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div id="toast" role="status"></div>
+
+  <script src="admin.js"></script>
+  <script src="admin-site.js"></script>
+</body>
+</html>
