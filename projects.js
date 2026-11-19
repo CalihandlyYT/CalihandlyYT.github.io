@@ -10,7 +10,7 @@ SITE.projects = [
       "CSS",
       "JavaScript"
     ],
-    "status": "done",
+    "status": "active",
     "year": 2026,
     "links": {
       "github": "https://github.com/CalihandlyYT/vht-terminal",
@@ -28,7 +28,7 @@ SITE.projects = [
       "TypeScript",
       "Node.js"
     ],
-    "status": "abandoned",
+    "status": "active",
     "year": 2026,
     "links": {
       "github": "",
@@ -104,7 +104,7 @@ SITE.projects = [
       "SQLite",
       "REST API"
     ],
-    "status": "abandoned",
+    "status": "active",
     "year": 2026,
     "links": {
       "github": "",

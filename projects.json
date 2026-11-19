@@ -9,7 +9,7 @@
       "CSS",
       "JavaScript"
     ],
-    "status": "done",
+    "status": "active",
     "year": 2026,
     "links": {
       "github": "https://github.com/CalihandlyYT/vht-terminal",
@@ -27,7 +27,7 @@
       "TypeScript",
       "Node.js"
     ],
-    "status": "abandoned",
+    "status": "active",
     "year": 2026,
     "links": {
       "github": "",
@@ -103,7 +103,7 @@
       "SQLite",
       "REST API"
     ],
-    "status": "abandoned",
+    "status": "active",
     "year": 2026,
     "links": {
       "github": "",
